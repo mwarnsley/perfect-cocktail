@@ -26,6 +26,14 @@ class Api {
 
         return cocktails;
     }
+    async getSingleRecipe(id) {
+        const response = await fetch(
+            `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+        );
+        const recipe = await response.json();
+
+        return recipe;
+    }
 }
 
 export default new Api();

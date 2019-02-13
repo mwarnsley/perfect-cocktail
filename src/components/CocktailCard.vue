@@ -16,8 +16,10 @@
         v-if="cocktail.strInstructions"
       >{{ cocktail.strInstructions }}</p>
       <a
-        class="btn btn-success"
+        class="btn btn-success get-recipe"
+        @click="getRecipe"
         :data-id="cocktail.idDrink"
+        data-target="#recipe"
         data-toggle="modal"
         href="#"
         v-if="!cocktail.strInstructions"
@@ -53,19 +55,40 @@
         </span>
       </p>
     </div>
+    <recipe-modal
+      :recipe="recipe"
+      v-if="Object.keys(recipe).length !== 0"
+    ></recipe-modal>
   </div>
 </template>
 
 <script>
 import times from "lodash/times";
+import api from "../api/api";
+import RecipeModal from "./RecipeModal.vue";
 
 export default {
   name: "CocktailCard",
   props: ["cocktail"],
+  components: {
+    RecipeModal
+  },
   data() {
     return {
-      ingredients: []
+      ingredients: [],
+      recipe: {}
     };
+  },
+  methods: {
+    async getRecipe(e) {
+      e.preventDefault();
+      const id = e.target.dataset.id;
+      const fetchRecipe = await api.getSingleRecipe(id);
+
+      console.log("Fetch Recipe: ", fetchRecipe);
+
+      this.recipe = fetchRecipe.drinks.length > 0 ? fetchRecipe.drinks[0] : {};
+    }
   },
   created() {
     // Getting the cocktail from the props

@@ -104,8 +104,11 @@ export default {
   },
   watch: {
     $route(to, from) {
-      // On change of the route, we need to change the searchby
+      // On change of the route, we need to change the data
       this.searchBy = this.$route.params.searchBy;
+      this.displayErrorMessage = "";
+      this.searchTerm = "";
+      this.cocktails = [];
     }
   },
   computed: {
