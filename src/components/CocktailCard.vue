@@ -56,6 +56,7 @@
       </p>
     </div>
     <recipe-modal
+      :clearRecipe="clearRecipe"
       :recipe="recipe"
       v-if="Object.keys(recipe).length !== 0"
     ></recipe-modal>
@@ -64,6 +65,7 @@
 
 <script>
 import times from "lodash/times";
+import isEmpty from "lodash/isEmpty";
 import api from "../api/api";
 import RecipeModal from "./RecipeModal.vue";
 
@@ -76,7 +78,8 @@ export default {
   data() {
     return {
       ingredients: [],
-      recipe: {}
+      recipe: {},
+      recipeFound: false
     };
   },
   methods: {
@@ -85,9 +88,10 @@ export default {
       const id = e.target.dataset.id;
       const fetchRecipe = await api.getSingleRecipe(id);
 
-      console.log("Fetch Recipe: ", fetchRecipe);
-
       this.recipe = fetchRecipe.drinks.length > 0 ? fetchRecipe.drinks[0] : {};
+    },
+    clearRecipe() {
+      this.recipe = {};
     }
   },
   created() {

@@ -14,10 +14,11 @@
         <div class="modal-header">
           <h2 class="modal-title">{{ recipe.strDrink }}</h2>
           <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
             aria-label="Close"
+            class="close"
+            @click="clearRecipe"
+            data-dismiss="modal"
+            type="button"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -38,9 +39,10 @@
         </div>
         <div class="modal-footer">
           <button
-            type="button"
             class="btn btn-secondary"
+            @click="clearRecipe"
             data-dismiss="modal"
+            type="button"
           >Close</button>
         </div>
       </div>
@@ -51,7 +53,7 @@
 <script>
 export default {
   name: "RecipeModal",
-  props: ["recipe"]
+  props: ["clearRecipe", "recipe"]
 };
 </script>
 
